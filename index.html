@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Rebellen mit Klebstoff – Matching Activities</title>
+<style>
+:root{--bg:#f3f6f1;--card:#fff;--ink:#1d2a22;--mute:#5d6b62;--line:#cfd9d0;--accent:#2f6b4f;--sel:#e3efe8;--ok:#cfe8d8;--okb:#2f6b4f;--bad:#f6d5d0;--badb:#b4382b;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#141b17;--card:#1d2722;--ink:#e8efe9;--mute:#9fb0a5;--line:#34443b;--accent:#6fc298;--sel:#27382f;--ok:#21412f;--okb:#6fc298;--bad:#4a2420;--badb:#ff8f80}}
+:root[data-theme="dark"]{--bg:#141b17;--card:#1d2722;--ink:#e8efe9;--mute:#9fb0a5;--line:#34443b;--accent:#6fc298;--sel:#27382f;--ok:#21412f;--okb:#6fc298;--bad:#4a2420;--badb:#ff8f80}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.5 Georgia,"Times New Roman",serif}
+main{max-width:860px;margin:0 auto;padding:20px 16px 40px}
+h1{font-size:1.6rem;margin:0 0 4px;line-height:1.2}
+.sub{color:var(--mute);margin:0 0 16px;font-family:system-ui,sans-serif;font-size:.95rem}
+nav{display:flex;gap:6px;overflow-x:auto;padding-bottom:8px;font-family:system-ui,sans-serif}
+nav button{flex:0 0 auto;border:1px solid var(--line);background:var(--card);color:var(--ink);padding:8px 12px;border-radius:8px;font:inherit;font-size:.9rem;cursor:pointer}
+nav button[aria-selected="true"]{background:var(--accent);color:#fff;border-color:var(--accent)}
+nav button.done::after{content:" ✓"}
+h2{font-size:1.25rem;margin:18px 0 4px}
+.help{font-family:system-ui,sans-serif;color:var(--mute);font-size:.9rem;margin:0 0 12px}
+.cols{display:grid;grid-template-columns:1fr 1.6fr;gap:12px}
+.col{display:flex;flex-direction:column;gap:8px}
+.item{text-align:left;width:100%;border:2px solid var(--line);background:var(--card);color:var(--ink);padding:10px 12px;border-radius:8px;font:inherit;font-size:.95rem;cursor:pointer;line-height:1.35}
+.item.term{font-weight:700}
+.item:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.item.sel{background:var(--sel);border-color:var(--accent)}
+.item.ok{background:var(--ok);border-color:var(--okb);cursor:default}
+.item.bad{background:var(--bad);border-color:var(--badb);animation:sh .3s}
+@keyframes sh{25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+@media (prefers-reduced-motion:reduce){.item.bad{animation:none}}
+.bar{display:flex;justify-content:space-between;align-items:center;margin-top:16px;font-family:system-ui,sans-serif;gap:10px;flex-wrap:wrap}
+.bar button{border:1px solid var(--line);background:var(--card);color:var(--ink);padding:8px 14px;border-radius:8px;font:inherit;cursor:pointer}
+.msg{font-weight:600;color:var(--accent)}
+@media (max-width:560px){.cols{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<main>
+<h1>Rebellen mit Klebstoff</h1>
+<p class="sub">Matching activities for your article notes. Tap a term, then tap its matching description.</p>
+<nav id="tabs" role="tablist"></nav>
+<section id="stage"></section>
+</main>
+<script>
+const S=[
+{t:"1. Activities of the group",p:[
+["Road and highway blockades","Blocking major roads (B31, A5 exits) by gluing themselves to the surface"],
+["Hunger strike","Began summer 2021 in front of the Reichstag to demand a meeting with the government"],
+["Dumpster diving (Containern)","Rescuing edible, thrown-away food from supermarket waste dumpsters"],
+["Self-reporting (Selbstanzeige)","Reporting themselves to the police to show how absurd it is that food rescue is illegal"],
+["Public food distribution","Handing rescued food to passersby in downtown Freiburg"],
+["De-escalation and preparation","Conflict training before protests and chocolates for blocked drivers"]]},
+{t:"2. Motivation and goals",p:[
+["Preventing climate collapse","Desperation over climate science; stopping destruction before it is irreversible"],
+["Stronger climate policies","The belief that current German climate policy is far too weak"],
+["Specific legal demands","An immediate Essen-Retten-Gesetz making supermarkets donate unsold food (like France since 2015)"],
+["Raising public awareness","Maximum public and political attention, even with a small group of activists"]]},
+{t:"3. Reactions to blockades",p:[
+["General public / drivers","High level of anger, shouting and verbal abuse towards activists"],
+["Police","Detain activists, impound rescued food at giveaways and issue fines"],
+["The Green Party (Steffi Lemke)","Distances itself; says blocking highways or airports is wrong and does not help"],
+["Marco Buschmann (FDP)","Tweeted that unregistered motorway demonstrations are illegal and protest must stay within law and constitution"]]},
+{t:"4. Supporters of the group",p:[
+["Broad demographics","A diverse team from students to a 66-year-old senior citizen"],
+["Tobias März","42-year-old father and solar energy consultant of 20 years"],
+["Hans Joachim Schellnhuber","Climate scientist and founder of the Potsdam Institute whose warnings the activists cite"]]},
+{t:"5. Dumpster diving (Containern)",p:[
+["Context","Protest against massive food waste: about 30% of food is thrown away, a truckload every minute"],
+["Legal issue","In Germany, taking discarded food from supermarket bins is illegal and punishable"],
+["Direct action","Saves food directly and is a political tool to demand a legislative shift (Essen-Retten-Gesetz)"]]}
+];
+const shuffle=a=>{a=[...a];for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a};
+const st=S.map(s=>({order:shuffle(s.p.map((_,i)=>i)),done:new Set(),sel:null}));
+let cur=0;
+const tabs=document.getElementById("tabs"),stage=document.getElementById("stage");
+function render(){
+ tabs.innerHTML="";
+ S.forEach((s,i)=>{const b=document.createElement("button");b.textContent="Section "+(i+1);b.setAttribute("role","tab");b.setAttribute("aria-selected",i===cur);
+  if(st[i].done.size===s.p.length)b.className="done";b.onclick=()=>{cur=i;render()};tabs.appendChild(b)});
+ const s=S[cur],x=st[cur];
+ stage.innerHTML=`<h2>${s.t}</h2><p class="help">Match each term (left) with its description (right).</p><div class="cols"><div class="col" id="L"></div><div class="col" id="R"></div></div><div class="bar"><span class="msg" id="msg">${x.done.size} of ${s.p.length} matched</span><span><button id="rs">Reset</button> <button id="nx">Next section</button></span></div>`;
+ const L=document.getElementById("L"),R=document.getElementById("R");
+ s.p.forEach((p,i)=>{const b=document.createElement("button");b.className="item term"+(x.done.has(i)?" ok":x.sel===i?" sel":"");b.textContent=p[0];
+  b.onclick=()=>{if(x.done.has(i))return;x.sel=x.sel===i?null:i;render()};L.appendChild(b)});
+ x.order.forEach(i=>{const b=document.createElement("button");b.className="item"+(x.done.has(i)?" ok":"");b.textContent=s.p[i][1];
+  b.onclick=()=>{if(x.done.has(i))return;if(x.sel===null){document.getElementById("msg").textContent="Pick a term on the left first.";return}
+   if(x.sel===i){x.done.add(i);x.sel=null;render()}else{b.classList.add("bad");document.getElementById("msg").textContent="Not a match. Try again.";setTimeout(()=>b.classList.remove("bad"),500)}};R.appendChild(b)});
+ if(x.done.size===s.p.length)document.getElementById("msg").textContent="Section complete!";
+ document.getElementById("rs").onclick=()=>{st[cur]={order:shuffle(s.p.map((_,i)=>i)),done:new Set(),sel:null};render()};
+ const nx=document.getElementById("nx");if(cur===S.length-1)nx.style.display="none";else nx.onclick=()=>{cur++;render()};
+}
+render();
+</script>
+</body>
+</html>
